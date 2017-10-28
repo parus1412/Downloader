@@ -1,20 +1,7 @@
-//package DownloaderMain;
-
-//import Downloader.Downloader;
-
-//import Downloader.Downloader;
-
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Scanner;
-
-import static java.lang.System.*;
 
 public class Downloader {
 
@@ -36,7 +23,8 @@ public class Downloader {
             }
 
             InputStream source = fileUrl.openStream();
-            OutputStream target = new FileOutputStream(new String (fileUrl.toString().substring(fileUrl.toString().lastIndexOf('/') + 1)));
+            OutputStream target = new FileOutputStream(
+                    new String (fileUrl.toString().substring(fileUrl.toString().lastIndexOf('/') + 1)));
             byte[] data = new byte[2048];
             int length;
 
