@@ -26,17 +26,16 @@ public class Downloader {
                 return;
             }
 
-
             URL fileUrl = new URL(args[0]);
-            HttpURLConnection conn = (HttpURLConnection) fileUrl.openConnection();
-            conn.setInstanceFollowRedirects(true);
-//            conn.getResponseCode()
-            System.out.println(conn.getResponseCode() + "\n");
-            System.out.println(conn.getHeaderField("Location") + "\n");
+            HttpURLConnection fileConnection = (HttpURLConnection) fileUrl.openConnection();
+            int httpCode = fileConnection.getResponseCode();
 
+            if ( httpCode == HttpURLConnection.HTTP_MOVED_PERM
+                    || httpCode == HttpURLConnection.HTTP_MOVED_TEMP ) {
+                fileUrl = new URL(fileConnection.getHeaderField("Location"));
+            }
 
-
-            InputStream source = conn.getInputStream();
+            InputStream source = fileUrl.openStream();
             OutputStream target = new FileOutputStream(new String (fileUrl.toString().substring(fileUrl.toString().lastIndexOf('/') + 1)));
             byte[] data = new byte[2048];
             int length;
